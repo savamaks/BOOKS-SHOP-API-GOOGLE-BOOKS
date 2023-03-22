@@ -1,0 +1,318 @@
+/*!**********************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./scss/style.scss ***!
+  \**********************************************************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&family=Open+Sans&family=Raleway:wght@100;300&display=swap);
+/*!**************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./scss/style.scss (1) ***!
+  \**************************************************************************************************************/
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.body {
+  width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  min-height: 100vh;
+  grid-template: minmax(116px, auto) 1fr/1fr;
+  grid-template-areas: "header" "main";
+}
+
+.header {
+  position: fixed;
+  z-index: 999;
+  max-width: 1440px;
+  width: 100%;
+  height: 116px;
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+}
+.header__title {
+  margin: 0 0 0 166px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  color: #1c2a39;
+}
+.header__nav {
+  display: flex;
+  align-items: center;
+  width: 372px;
+  gap: 40px;
+}
+.header__nav-link {
+  width: max-content;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 12px;
+  text-transform: uppercase;
+  color: #5c6a79;
+  cursor: pointer;
+}
+.header__nav-link.active {
+  font-weight: 900;
+  color: #1C2A39;
+}
+.header__box {
+  margin: 0 158px 0 0;
+  width: 121px;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  grid-area: main;
+}
+
+.advertising {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 17px;
+  position: relative;
+  margin: 3px 0 0;
+}
+.advertising__slider {
+  position: relative;
+  padding: 0;
+  width: 1120px;
+  height: 702px;
+}
+.advertising__slider-image {
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.advertising__slider-image.active {
+  opacity: 1;
+}
+.advertising__old-book {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: absolute;
+  top: 79px;
+  right: -86px;
+  background: #9E98DC;
+  width: 149px;
+  height: 204px;
+  padding: 20px;
+}
+.advertising__old-book.two {
+  top: 360px;
+  right: -160px;
+  width: 137px;
+  height: 273px;
+  background: #FF8FE6;
+}
+.advertising__old-book--text {
+  max-width: 109px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  text-transform: uppercase;
+  color: #1c2a39;
+}
+.advertising__old-book--button {
+  width: 54px;
+  height: 12px;
+}
+.advertising__pointer-box {
+  display: flex;
+  gap: 10px;
+}
+.advertising__point {
+  cursor: pointer;
+  width: 12px;
+  height: 12px;
+  background: #EFEEF6;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+.advertising__point.active {
+  background: #9E98DC;
+}
+
+.block {
+  margin: 105px auto 0;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.block__nav {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 416px;
+  height: 710px;
+  background: #efeef6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 23px;
+}
+.block__nav-link {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  text-transform: capitalize;
+  color: #5c6a79;
+}
+.block__nav-link.active {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #1c2a39;
+}
+.block__box {
+  margin: 30px 160px 0 0;
+  width: 923px;
+  display: flex;
+  gap: 62px 75px;
+  align-items: center;
+  flex-wrap: wrap;
+  z-index: 2;
+}
+
+.card-book {
+  display: flex;
+  gap: 36px;
+  width: 424px;
+}
+.card-book__img {
+  width: 212px;
+  height: 327px;
+  background-image: url(4e008c4c29934ee4a694.png);
+  background-size: cover;
+  box-shadow: 0px 24px 36px rgba(53, 49, 84, 0.28);
+}
+.card-book__box {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+}
+.card-book__box-autor {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 14px;
+  text-transform: capitalize;
+  color: #5c6a79;
+}
+.card-book__box-title {
+  margin: 5px 0;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #1c2a39;
+}
+.card-book__box-raiting {
+  display: flex;
+  gap: 6px;
+}
+.card-book__box-raiting--star {
+  display: flex;
+  align-items: center;
+}
+.card-book__box-raiting--text {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 14px;
+  color: #5c6a79;
+}
+.card-book__box-description {
+  margin: 17px 0;
+  width: 176px;
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 14px;
+  text-transform: capitalize;
+  color: #5c6a79;
+}
+.card-book__box-price {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: #1c2a39;
+}
+.card-book__box-button {
+  margin: 17px 0;
+  width: 176px;
+  height: 45px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 8px;
+  line-height: 10px;
+  text-transform: uppercase;
+  color: #4c3db2;
+  border: 1px solid #4c3db2;
+}
+
+.button-load {
+  margin: 84px 0 74px 0;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 8px;
+  line-height: 10px;
+  text-transform: uppercase;
+  color: #4c3db2;
+  border: 1px solid #4c3db2;
+  width: 176px;
+  height: 45px;
+}
+
+/*# sourceMappingURL=main.css.map*/
