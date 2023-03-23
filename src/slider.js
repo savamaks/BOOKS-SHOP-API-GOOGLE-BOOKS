@@ -10,10 +10,12 @@ class Slider {
             {
                 url: "..//image/image/banner3.png",
             },
+            
         ];
         this._sliderBox = document.querySelector(".advertising__slider");
         this._pointBox = document.querySelector(".advertising__pointer-box");
         this._slider;
+        this._count = 0
     }
     initSlider() {
         this._arrImages.forEach((element, index) => {
@@ -29,18 +31,19 @@ class Slider {
         this._pointer.forEach((point) => {
             point.addEventListener("click", () => {
                 this.pointerClick(point.dataset.index);
+                this._count = point.dataset.index
             });
         });
         this.interval();
     }
     interval() {
-        let count = 0;
+        
         setInterval(() => {
-            this.pointerClick(count);
-            count++;
+            this.pointerClick(this._count);
+            this._count++;
 
-            if (count === this._pointer.length) {
-                count = 0;
+            if (this._count === this._pointer.length) {
+                this._count = 0;
             }
         }, 5000);
     }

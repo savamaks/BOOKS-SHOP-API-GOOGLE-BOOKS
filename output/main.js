@@ -22,12 +22,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _categories__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./categories */ "./src/categories.js");
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 
-
-class RequestApi extends _categories__WEBPACK_IMPORTED_MODULE_0__["default"] {
+class RequestApi{
     constructor() {
-        super();
         this._buttonRequest = document.querySelector(".button-load");
         this._keyAPI = "AIzaSyCbJN6vx_NxrCKGjsVCVX7EjRLgzo1zKo4";
         this._bookBox = document.querySelector(".block__box");
@@ -35,232 +35,6 @@ class RequestApi extends _categories__WEBPACK_IMPORTED_MODULE_0__["default"] {
         this._basket = document.querySelector(".header__box-count-product");
         this._amountProduct = localStorage.length;
         this.placeholder='../image/image/book-placeholder.jpg'
-    }
-
-    start() {
-        this.initNavLink();
-        this.initHandler();
-        this.startRequest();
-        this.basket();
-
-        
-    }
-    async startRequest() {
-       
-        this._result = await this.request();
-
-        this.writeBook(this._result.items);
-    }
-
-    request() {
-        // console.log(this._category);
-        // console.log(this._arrCategories[this._category].url)
-        // console.log(`https://www.googleapis.com/books/v1/volumes?q="subject:${this._arrCategories[this._category].url}"&key=${
-        //     this._keyAPI
-        // }&printType=books&startIndex=${this._start}&maxResults=6&langRestrict=ru`);
-        return fetch(
-            `https://www.googleapis.com/books/v1/volumes?q="subject:${this._arrCategories[this._category].url}"&key=${
-                this._keyAPI
-            }&printType=books&startIndex=${this._start}&maxResults=6&langRestrict=ru`
-        )
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                return (this._result = data);
-            })
-            .catch(() => {
-                console.log("error");
-            });
-    }
-    async initHandler() {
-        this._buttonRequest.addEventListener("click", async () => {
-            this._start += 6;
-            this._result = await this.request();
-
-            this.writeBook(this._result.items);
-            
-
-        });
-    }
-     writeBook(arrBook) {
-        // console.log(arrBook);
-        let count = 0
-        arrBook.forEach(async (element, index) => {
-            let book = element;
-            let idBook = book.id;
-            let autor = book.volumeInfo.authors;
-            let description = book.volumeInfo.description?.slice(0, 82);
-            let image = book.volumeInfo.imageLinks?.thumbnail;
-            let title = book.volumeInfo.title;
-            let price = book.saleInfo.retailPrice;
-            let priceN = `${price?.amount ? price.amount : ""} ${price?.currencyCode ? price.currencyCode : ""}`;
-            let raiting = book.volumeInfo.averageRating;
-            let grade = book.volumeInfo.raitingCount;
-            let flagButton = false;
-            //проверка есть книга в корзине
-            for (let index = 0; index < localStorage.length; index++) {
-                if (localStorage.key(index) === idBook) {
-                    flagButton = true;
-                }
-            }
-
-            if (document.getElementById(idBook)) {
-                
-                return;
-            }
-            // count++
-            // if(count<=6){
-            //     let r = 6-count
-            //     await this.request(r)
-            //     this.writeBook(this._result.items)
-            // }
-            // console.log(count);
-            let bookNew = `
-            <div class="card-book" id='${idBook}' attr = "${flagButton === true ? "buy" : "not-buy"}">
-                <div class="card-book__img" style="background-image:url(${image?image:this.placeholder});"></div>
-                <div class="card-book__box">
-                    <p class="card-book__box-autor">${autor ? autor : ""}</p>
-                    <h2 class="card-book__box-title">${title}</h2>
-                    <div class="card-book__box-raiting">
-                        <div class="card-book__box-raiting--star">
-                            <img src="../image/icons/Star.svg" alt="" />
-                            <img src="../image/icons/Star.svg" alt="" />
-                            <img src="../image/icons/Star.svg" alt="" />
-                            <img src="../image/icons/Star.svg" alt="" />
-                            <img src="../image/icons/Star.svg" alt="" />
-                        </div>
-                    <p class="card-book__box-raiting--text">252 review</p>
-                    </div>
-                    <p class="card-book__box-description">${description === undefined ? "" : description + "..."}</p>
-                    <p class="card-book__box-price">${priceN}</p>
-                    <button class="card-book__box-button ${flagButton === true ? "in-the-cart" : ""}">${
-                flagButton === true ? "in the cart" : "buy now"
-            }</button>
-                </div>
-            </div>`;
-            this._bookBox.innerHTML += bookNew;
-        });
-        this.initButtonBuy();
-    }
-    initButtonBuy() {
-        this._buttons = document.querySelectorAll(".card-book__box-button");
-        this._buttons.forEach((element) => {
-            element.addEventListener("click", () => {
-                this.bookBuy(element);
-            });
-        });
-    }
-    bookBuy(el) {
-        // console.log(el.parentElement.parentElement.id);
-        let book = document.getElementById(el.parentElement.parentElement.id);
-        if (book.getAttribute("attr") === "not-buy") {
-            book.setAttribute("attr", "buy");
-            book.querySelector(".card-book__box-button").classList.toggle("in-the-cart");
-            book.querySelector(".card-book__box-button").textContent = "in the cart";
-            this.localMemory(book, el.parentElement.parentElement.id);
-            this.basket();
-        } else {
-            book.setAttribute("attr", "not-buy");
-            book.querySelector(".card-book__box-button").classList.toggle("in-the-cart");
-            book.querySelector(".card-book__box-button").textContent = "buy now";
-            localStorage.removeItem(el.parentElement.parentElement.id);
-            this.basket();
-        }
-        // console.log(book);
-    }
-    basket() {
-        this._amountProduct = localStorage.length;
-        this._basket.innerHTML = this._amountProduct;
-        if (this._amountProduct > 0) {
-            this._basket.classList.add("active");
-        } else {
-            this._basket.classList.remove("active");
-        }
-    }
-
-    localMemory(book, id) {
-        // console.log(book.children[1].children[4].textContent);
-        this._arrBook = {
-            id: id,
-            autor: book.children[1].children[0].textContent,
-            title: book.children[1].children[1].textContent,
-            description: book.children[1].children[3].textContent,
-            price: book.children[1].children[4].textContent,
-        };
-        this._arrBookJson = JSON.stringify(this._arrBook);
-        localStorage.setItem(id, this._arrBookJson);
-    }
-}
-const requestApi = new RequestApi();
-document.addEventListener("DOMContentLoaded", requestApi.start());
-
-// const res = async ()=>{
-//     try {
-//         const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q="subject:Business"&key=AIzaSyCbJN6vx_NxrCKGjsVCVX7EjRLgzo1zKo4&printType=books&startIndex=0&maxResults=2&langRestrict=en`);
-//         const json = await response.json();
-//         return json;
-//     } catch {
-//         console.log('error');
-//     }
-// }
-
-// console.log();
-
-// let bookNew = document.createElement("div");
-// bookNew.ClassList.add("card-book");
-
-// let imageDiv = document.createElement("div");
-// imageDiv.ClassList.add("card-book__img");
-// imageDiv.style.backgroundImage = `url(${image})`;
-
-// let bookDiv = document.createElement("div");
-// bookDiv.ClassList.add("card-book__box");
-
-// let autorBook = document.createElement("p");
-// autorBook.classList.add("card-book__box-autor");
-// autorBook.textContent = autor ? autor : "";
-
-// let titleBook = document.createElement("h2");
-// titleBook.classList.add("card-book__box-title");
-// titleBook.textContent = title;
-
-// let raitingDiv = document.createElement("div");
-// raitingDiv.classList.add("card-book__box-raiting");
-
-// let raitingStarDiv = document.createElement("div");
-// raitingStarDiv.classList.add("card-book__box-raiting--star");
-
-// let raitingText = document.createElement("div");
-// raitingText.classList.add("card-book__box-raiting--text");
-
-// let descriptionBook = document.createElement("p");
-// descriptionBook.classList.add("card-book__box-description");
-// descriptionBook.textContent = description === undefined ? "" : description + "...";
-
-// let priceBook = document.createElement("p");
-// priceBook.classList.add("card-book__box-price");
-// priceBook.textContent = priceN;
-
-// let buttonBuy = document.createElement("button");
-// buttonBuy.classList.add("card-book__box-button")`<div class="card-book">
-
-
-/***/ }),
-
-/***/ "./src/categories.js":
-/*!***************************!*\
-  !*** ./src/categories.js ***!
-  \***************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-class Categories {
-    constructor() {
         this._arrCategories = [
             {
                 name: "Architecture",
@@ -332,21 +106,35 @@ class Categories {
         this._category = 0
     }
 
+    
+    //запрос на сервер
+    async request() {
+        
+        try {
+            const response = await fetch(
+                `https://www.googleapis.com/books/v1/volumes?q="subject:${this._arrCategories[this._category].url}"&key=${this._keyAPI}&printType=books&startIndex=${this._start}&maxResults=6&langRestrict=ru`
+            );
+            const data = await response.json();
+            return (this._result = data);
+        } catch {
+            console.log("error");
+        }
+    }
+    //инициализация списка категорий
     initNavLink() {
         this._arrCategories.forEach((element, index) => {
             this._link = `<h2 class="block__nav-link n${index} ${index == 0 ? "active" : ""}" data-index=${index}>${element.name}</h2>`;
-            this._navBox.innerHTML += this._link
+            this._navBox.innerHTML += this._link;
         });
         this._links = document.querySelectorAll(".block__nav-link");
         this._links.forEach((link) => {
             link.addEventListener("click", () => {
                 this.linkClick(link.dataset.index);
-                if(+this._category !== +link.dataset.index ){
-                    this._category = link.dataset.index
-                    this._start = 0
-                    this._bookBox.innerHTML = ''
-                    this.startRequest()
-                    
+                if (+this._category !== +link.dataset.index) {
+                    this._category = link.dataset.index;
+                    this._start = 0;
+                    this._bookBox.innerHTML = "";
+                    this.startRequest();
                 }
             });
         });
@@ -357,10 +145,224 @@ class Categories {
     }
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Categories);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RequestApi);
 
 
 
+
+
+
+
+
+// const res = async ()=>{
+//     try {
+//         const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q="subject:Business"&key=AIzaSyCbJN6vx_NxrCKGjsVCVX7EjRLgzo1zKo4&printType=books&startIndex=0&maxResults=2&langRestrict=en`);
+//         const json = await response.json();
+//         return json;
+//     } catch {
+//         console.log('error');
+//     }
+// }
+
+// console.log();
+
+// let bookNew = document.createElement("div");
+// bookNew.ClassList.add("card-book");
+
+// let imageDiv = document.createElement("div");
+// imageDiv.ClassList.add("card-book__img");
+// imageDiv.style.backgroundImage = `url(${image})`;
+
+// let bookDiv = document.createElement("div");
+// bookDiv.ClassList.add("card-book__box");
+
+// let autorBook = document.createElement("p");
+// autorBook.classList.add("card-book__box-autor");
+// autorBook.textContent = autor ? autor : "";
+
+// let titleBook = document.createElement("h2");
+// titleBook.classList.add("card-book__box-title");
+// titleBook.textContent = title;
+
+// let raitingDiv = document.createElement("div");
+// raitingDiv.classList.add("card-book__box-raiting");
+
+// let raitingStarDiv = document.createElement("div");
+// raitingStarDiv.classList.add("card-book__box-raiting--star");
+
+// let raitingText = document.createElement("div");
+// raitingText.classList.add("card-book__box-raiting--text");
+
+// let descriptionBook = document.createElement("p");
+// descriptionBook.classList.add("card-book__box-description");
+// descriptionBook.textContent = description === undefined ? "" : description + "...";
+
+// let priceBook = document.createElement("p");
+// priceBook.classList.add("card-book__box-price");
+// priceBook.textContent = priceN;
+
+// let buttonBuy = document.createElement("button");
+// buttonBuy.classList.add("card-book__box-button")`<div class="card-book">
+
+
+/***/ }),
+
+/***/ "./src/WriteContent.js":
+/*!*****************************!*\
+  !*** ./src/WriteContent.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RequestApi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RequestApi */ "./src/RequestApi.js");
+
+
+class WriteContent extends _RequestApi__WEBPACK_IMPORTED_MODULE_0__["default"] {
+    constructor() {
+        super();
+    }
+    start() {
+        this.startRequest();
+        this.initNavLink();
+        this.initHandler();
+        this.basket();
+    }
+    //при запуске отображение книг из категории по умолчанию
+    async startRequest() {
+        this._result = await this.request();
+        this.writeBook(this._result.items);
+    }
+
+    //кнопка load more
+    async initHandler() {
+        this._buttonRequest.addEventListener("click", async () => {
+            this._start += 6;
+            this._result = await this.request();
+
+            this.writeBook(this._result.items);
+        });
+    }
+    
+    // отображение книг по запросу
+    writeBook(arrBook) {
+        let count = 0;
+        arrBook.forEach(async (element, index) => {
+            let book = element;
+            let idBook = book.id;
+            let autor = book.volumeInfo.authors;
+            let description = book.volumeInfo.description?.slice(0, 82);
+            let image = book.volumeInfo.imageLinks?.thumbnail;
+            let title = book.volumeInfo.title;
+            let price = book.saleInfo.retailPrice;
+            let priceN = `${price?.amount ? price.amount : ""} ${price?.currencyCode ? price.currencyCode : ""}`;
+            let raiting = book.volumeInfo.averageRating;
+            let grade = book.volumeInfo.raitingCount;
+            let flagButton = false;
+
+            //проверка есть книга в корзине
+            for (let index = 0; index < localStorage.length; index++) {
+                if (localStorage.key(index) === idBook) {
+                    flagButton = true;
+                }
+            }
+            //проверка на повтор книг в списке, видимо из-за какого-то косяка апи выдает одинаковые книги
+            if (document.getElementById(idBook)) {
+                return;
+            }
+
+            // отображение рейтинга
+            let raitingStar = "";
+            if (raiting) {
+                for (let index = 0; index < raiting; index++) {
+                    let star = `<img src="../image/icons/Star.svg" alt="" />`;
+                    raitingStar += star;
+                }
+            }
+
+            // count++
+            // if(count<=6){
+            //     let r = 6-count
+            //     await this.request(r)
+            //     this.writeBook(this._result.items)
+            // }
+            // console.log(count);
+
+            // создание карточки книги
+            let bookNew = `
+            <div class="card-book" id='${idBook}' attr = "${flagButton === true ? "buy" : "not-buy"}">
+                <div class="card-book__img" style="background-image:url(${image ? image : this.placeholder});"></div>
+                <div class="card-book__box">
+                    <p class="card-book__box-autor">${autor ? autor : ""}</p>
+                    <h2 class="card-book__box-title">${title}</h2>
+                    <div class="card-book__box-raiting">
+                        <div class="card-book__box-raiting--star">
+                            ${raiting ? raitingStar : ""}
+                        </div>
+                    <p class="card-book__box-raiting--text">${grade ? grade + " review" : ""}</p>
+                    </div>
+                    <p class="card-book__box-description">${description === undefined ? "" : description + "..."}</p>
+                    <p class="card-book__box-price">${priceN}</p>
+                    <button class="card-book__box-button ${flagButton === true ? "in-the-cart" : ""}">${
+                flagButton === true ? "in the cart" : "buy now"
+            }</button>
+                </div>
+            </div>`;
+            this._bookBox.innerHTML += bookNew;
+        });
+        this.initButtonBuy();
+    }
+    //навешивание обработчика на кнопку купить в карточке книги
+    initButtonBuy() {
+        this._buttons = document.querySelectorAll(".card-book__box-button");
+        this._buttons.forEach((element) => {
+            element.addEventListener("click", () => {
+                this.bookBuy(element);
+            });
+        });
+    }
+    //функция добавления книги в корзину и удалении из карзины
+    bookBuy(el) {
+        let book = document.getElementById(el.parentElement.parentElement.id);
+        if (book.getAttribute("attr") === "not-buy") {
+            book.setAttribute("attr", "buy");
+            book.querySelector(".card-book__box-button").classList.toggle("in-the-cart");
+            book.querySelector(".card-book__box-button").textContent = "in the cart";
+            this.localMemory(book, el.parentElement.parentElement.id);
+            this.basket();
+        } else {
+            book.setAttribute("attr", "not-buy");
+            book.querySelector(".card-book__box-button").classList.toggle("in-the-cart");
+            book.querySelector(".card-book__box-button").textContent = "buy now";
+            localStorage.removeItem(el.parentElement.parentElement.id);
+            this.basket();
+        }
+    }
+    //отображение колличества товара в карзине
+    basket() {
+        this._amountProduct = localStorage.length;
+        this._basket.innerHTML = this._amountProduct;
+        if (this._amountProduct > 0) {
+            this._basket.classList.add("active");
+        } else {
+            this._basket.classList.remove("active");
+        }
+    }
+    // книги с корзины сохраняються в localStorage
+    localMemory(book, id) {
+        this._arrBook = {
+            id: id,
+            autor: book.children[1].children[0].textContent,
+            title: book.children[1].children[1].textContent,
+            description: book.children[1].children[3].textContent,
+            price: book.children[1].children[4].textContent,
+        };
+        this._arrBookJson = JSON.stringify(this._arrBook);
+        localStorage.setItem(id, this._arrBookJson);
+    }
+}
+const writeContent = new WriteContent();
+document.addEventListener("DOMContentLoaded", writeContent.start());
 
 
 /***/ }),
@@ -383,10 +385,12 @@ class Slider {
             {
                 url: "..//image/image/banner3.png",
             },
+            
         ];
         this._sliderBox = document.querySelector(".advertising__slider");
         this._pointBox = document.querySelector(".advertising__pointer-box");
         this._slider;
+        this._count = 0
     }
     initSlider() {
         this._arrImages.forEach((element, index) => {
@@ -402,18 +406,19 @@ class Slider {
         this._pointer.forEach((point) => {
             point.addEventListener("click", () => {
                 this.pointerClick(point.dataset.index);
+                this._count = point.dataset.index
             });
         });
         this.interval();
     }
     interval() {
-        let count = 0;
+        
         setInterval(() => {
-            this.pointerClick(count);
-            count++;
+            this.pointerClick(this._count);
+            this._count++;
 
-            if (count === this._pointer.length) {
-                count = 0;
+            if (this._count === this._pointer.length) {
+                this._count = 0;
             }
         }, 5000);
     }
@@ -511,7 +516,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./scss/style.scss */ "./scss/style.scss");
 /* harmony import */ var _src_slider_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/slider.js */ "./src/slider.js");
 /* harmony import */ var _src_slider_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_src_slider_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _src_RequestApi_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/RequestApi.js */ "./src/RequestApi.js");
+/* harmony import */ var _src_WriteContent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/WriteContent */ "./src/WriteContent.js");
 
 
 
