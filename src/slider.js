@@ -16,13 +16,13 @@ class Slider {
         this._slider;
     }
     initSlider() {
-        console.log(56);
         this._arrImages.forEach((element, index) => {
             this._slider = `<div class="advertising__slider-image n${index} ${index === 0 ? "active" : ""}" style = 'background-image:url(${
                 this._arrImages[index].url
             })' data-index="${index}"></div>`;
-            this._point = `<div class="advertising__point n${index} ${index === 0 ? "active" : ""}" data-index="${index}"></div>`;
             this._sliderBox.innerHTML += this._slider;
+
+            this._point = `<div class="advertising__point n${index} ${index === 0 ? "active" : ""}" data-index="${index}"></div>`;
             this._pointBox.innerHTML += this._point;
         });
         this._pointer = document.querySelectorAll(".advertising__point");
@@ -31,7 +31,20 @@ class Slider {
                 this.pointerClick(point.dataset.index);
             });
         });
+        this.interval();
     }
+    interval() {
+        let count = 0;
+        setInterval(() => {
+            this.pointerClick(count);
+            count++;
+
+            if (count === this._pointer.length) {
+                count = 0;
+            }
+        }, 5000);
+    }
+
     pointerClick(num) {
         this._sliderBox.querySelector(".active").classList.remove("active");
         this._sliderBox.querySelector(`.n${num}`).classList.add("active");

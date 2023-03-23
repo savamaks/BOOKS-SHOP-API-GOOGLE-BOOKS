@@ -7,6 +7,9 @@
 a {
     text-decoration: none;
 }
+:root{
+    --index:call(1vw+1vh)
+}
 button {
     padding: 0;
     border: none;
@@ -16,7 +19,7 @@ button {
     cursor: pointer;
 }
 .body {
-    width: 1440px;
+    max-width: 1440px;
     margin: 0 auto;
     display: grid;
     min-height: 100vh;
@@ -44,16 +47,17 @@ button {
         font-size: 24px;
         line-height: 29px;
         color: #1c2a39;
-        
     }
 
     // .header__nav
 
     &__nav {
+        padding: 0 20px 0 20px;
         display: flex;
         align-items: center;
         width: 372px;
-        gap: 40px;
+        min-width: 330px;
+        justify-content: space-between;
     }
 
     // .header__nav-link
@@ -68,17 +72,18 @@ button {
         text-transform: uppercase;
         color: #5c6a79;
         cursor: pointer;
-        &.active{
+        &.active {
             font-weight: 900;
-            color: #1C2A39;
+            color: #1c2a39;
         }
     }
 
     // .header__box
 
     &__box {
+        position: relative;
         margin: 0 158px 0 0;
-        width: 121px;
+        // width: 121px;
         height: 27px;
         display: flex;
         align-items: center;
@@ -89,6 +94,36 @@ button {
 
     &__box-link {
     }
+
+    //.header__box-count-product
+    
+    &__box-count-product {
+        position: absolute;
+        right: -3px;
+        bottom: 3px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        background: #ff353a;
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 10px;
+        line-height: 12px;
+        text-transform: capitalize;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        &.active{
+            opacity: 1;
+        }
+    }
 }
 
 .main {
@@ -98,6 +133,9 @@ button {
     grid-area: main;
 }
 .advertising {
+    width: 77.7vw;
+    max-width: 1120px;
+    min-width: 700px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -109,8 +147,10 @@ button {
     &__slider {
         position: relative;
         padding: 0;
-        width: 1120px;
-        height: 702px;
+        width: 100%;
+        height: 48.7vw;
+        min-height: 440px;
+        max-height:702px ;
     }
 
     &__slider-image {
@@ -122,6 +162,11 @@ button {
         left: 0;
         top: 0;
         opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        -webkit-transition: opacity 0.5s ease-in-out;
+        -moz-transition: opacity 0.5s ease-in-out;
+        -ms-transition: opacity 0.5s ease-in-out;
+        -o-transition: opacity 0.5s ease-in-out;
         &.active {
             opacity: 1;
         }
@@ -136,18 +181,17 @@ button {
         position: absolute;
         top: 79px;
         right: -86px;
-        background: #9E98DC;
+        background: #9e98dc;
         width: 149px;
         height: 204px;
         padding: 20px;
-        &.two{
+        &.two {
             top: 360px;
             right: -160px;
             width: 137px;
             height: 273px;
-            background: #FF8FE6;
+            background: #ff8fe6;
         }
-        
     }
 
     // .advertising__old-book--text
@@ -176,37 +220,33 @@ button {
         display: flex;
         gap: 10px;
     }
-    &__point{
+    &__point {
         cursor: pointer;
         width: 12px;
         height: 12px;
-        background: #EFEEF6;
+        background: #efeef6;
         border-radius: 50%;
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         -ms-border-radius: 50%;
         -o-border-radius: 50%;
-        &.active{
-            background: #9E98DC;
+        &.active {
+            background: #9e98dc;
         }
+    }
 }
-}
-
 
 .block {
     margin: 105px auto 0;
     width: 100%;
     position: relative;
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    align-items: start;
     // .block__nav
 
     &__nav {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 416px;
+        
+        min-width: 416px;
         height: 710px;
         background: #efeef6;
         display: flex;
@@ -226,6 +266,7 @@ button {
         line-height: 15px;
         text-transform: capitalize;
         color: #5c6a79;
+        cursor: pointer;
         &.active {
             font-weight: 700;
             font-size: 16px;
@@ -237,8 +278,8 @@ button {
     // .block__box
 
     &__box {
-        margin: 30px 160px 0 0;
-        width: 923px;
+        margin: 30px 160px 0 -60px;
+        max-width: 923px;
         display: flex;
         gap: 62px 75px;
         align-items: center;
@@ -255,14 +296,15 @@ button {
     &__img {
         width: 212px;
         height: 327px;
-        background-image: url(..//image/image/book.png);
         background-size: cover;
+        background-position: center center;
         box-shadow: 0px 24px 36px rgba(53, 49, 84, 0.28);
     }
 
     // .card-book__box
 
     &__box {
+        max-width: 176px;
         display: flex;
         align-items: start;
         justify-content: center;
@@ -358,6 +400,16 @@ button {
         text-transform: uppercase;
         color: #4c3db2;
         border: 1px solid #4c3db2;
+        &.in-the-cart {
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 8px;
+            line-height: 10px;
+            text-transform: uppercase;
+            color: #5c6a79;
+            border: 1px solid #eeedf5;
+        }
     }
 }
 
