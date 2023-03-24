@@ -16,6 +16,7 @@ module.exports = {
             `...`,// оставить дефолтные настройки webpack и добавить то что ниже
             new CssMinimizerPlugin(),
         ],
+
     },
     plugins: [new MiniCssExtractPlugin()],
     module: {

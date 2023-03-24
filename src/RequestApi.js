@@ -1,5 +1,4 @@
-
-class RequestApi{
+class RequestApi {
     constructor() {
         this._buttonRequest = document.querySelector(".button-load");
         this._keyAPI = "AIzaSyCbJN6vx_NxrCKGjsVCVX7EjRLgzo1zKo4";
@@ -7,7 +6,7 @@ class RequestApi{
         this._start = 0;
         this._basket = document.querySelector(".header__box-count-product");
         this._amountProduct = localStorage.length;
-        this.placeholder='../image/image/book-placeholder.jpg'
+        this.placeholder = "../image/image/book-placeholder.jpg";
         this._arrCategories = [
             {
                 name: "Architecture",
@@ -74,18 +73,18 @@ class RequestApi{
                 url: "Travel",
             },
         ];
-        this._navBox = document.querySelector('.block__nav')
-        this._link 
-        this._category = 0
+        this._navBox = document.querySelector(".block__nav");
+        this._link;
+        this._category = 0;
     }
 
-    
     //запрос на сервер
     async request() {
-        
         try {
             const response = await fetch(
-                `https://www.googleapis.com/books/v1/volumes?q="subject:${this._arrCategories[this._category].url}"&key=${this._keyAPI}&printType=books&startIndex=${this._start}&maxResults=6&langRestrict=ru`
+                `https://www.googleapis.com/books/v1/volumes?q="subject:${this._arrCategories[this._category].url}"&key=${
+                    this._keyAPI
+                }&printType=books&startIndex=${this._start}&maxResults=6&langRestrict=ru`
             );
             const data = await response.json();
             return (this._result = data);
@@ -96,12 +95,16 @@ class RequestApi{
     //инициализация списка категорий
     initNavLink() {
         this._arrCategories.forEach((element, index) => {
-            this._link = `<h2 class="block__nav-link n${index} ${index == 0 ? "active" : ""}" data-index=${index}>${element.name}</h2>`;
+            this._link = `<div class="block__nav-box">
+            <div class="block__nav-circle n${index} ${index == 0 ? "active" : ""}" data-index=${index}></div>
+            <h2 class="block__nav-link n${index} ${index == 0 ? "active" : ""}" data-index=${index}>${element.name}</h2>
+        </div>`;
             this._navBox.innerHTML += this._link;
         });
         this._links = document.querySelectorAll(".block__nav-link");
         this._links.forEach((link) => {
-            link.addEventListener("click", () => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault()
                 this.linkClick(link.dataset.index);
                 if (+this._category !== +link.dataset.index) {
                     this._category = link.dataset.index;
@@ -113,19 +116,16 @@ class RequestApi{
         });
     }
     linkClick(num) {
-        this._navBox.querySelector(".active").classList.remove("active");
-        this._navBox.querySelector(`.n${num}`).classList.add("active");
+        this._navBox.querySelectorAll(".active").forEach((element) => {
+            element.classList.remove("active");
+        });
+        this._navBox.querySelectorAll(`.n${num}`).forEach((element) => {
+            element.classList.add("active");
+        });
     }
 }
 
-export default RequestApi
-
-
-
-
-
-
-
+export default RequestApi;
 
 // const res = async ()=>{
 //     try {

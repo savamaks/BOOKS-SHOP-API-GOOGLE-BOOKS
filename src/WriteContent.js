@@ -25,55 +25,49 @@ class WriteContent extends RequestApi {
             this.writeBook(this._result.items);
         });
     }
-    
+
     // отображение книг по запросу
     writeBook(arrBook) {
-        let count = 0;
-        arrBook.forEach(async (element, index) => {
-            let book = element;
-            let idBook = book.id;
-            let autor = book.volumeInfo.authors;
-            let description = book.volumeInfo.description?.slice(0, 82);
-            let image = book.volumeInfo.imageLinks?.thumbnail;
-            let title = book.volumeInfo.title;
-            let price = book.saleInfo.retailPrice;
-            let priceN = `${price?.amount ? price.amount : ""} ${price?.currencyCode ? price.currencyCode : ""}`;
-            let raiting = book.volumeInfo.averageRating;
-            let grade = book.volumeInfo.raitingCount;
-            let flagButton = false;
+        if (!arrBook) return
 
-            //проверка есть книга в корзине
-            for (let index = 0; index < localStorage.length; index++) {
-                if (localStorage.key(index) === idBook) {
-                    flagButton = true;
+            arrBook.forEach(async (element, index) => {
+                let book = element;
+                let idBook = book.id;
+                let autor = book.volumeInfo.authors;
+                let description = book.volumeInfo.description?.slice(0, 82);
+                let image = book.volumeInfo.imageLinks?.thumbnail;
+                let title = book.volumeInfo.title;
+                let price = book.saleInfo.retailPrice;
+                let priceN = `${price?.amount ? price.amount : ""} ${price?.currencyCode ? price.currencyCode : ""}`;
+                let raiting = book.volumeInfo.averageRating;
+                let grade = book.volumeInfo.raitingCount;
+                let flagButton = false;
+
+                //проверка есть книга в корзине
+                for (let index = 0; index < localStorage.length; index++) {
+                    if (localStorage.key(index) === idBook) {
+                        flagButton = true;
+                    }
                 }
-            }
-            //проверка на повтор книг в списке, видимо из-за какого-то косяка апи выдает одинаковые книги
-            if (document.getElementById(idBook)) {
-                return;
-            }
-
-            // отображение рейтинга
-            let raitingStar = "";
-            if (raiting) {
-                for (let index = 0; index < raiting; index++) {
-                    let star = `<img src="../image/icons/Star.svg" alt="" />`;
-                    raitingStar += star;
+                //проверка на повтор книг в списке, видимо из-за какого-то косяка апи выдает одинаковые книги
+                if (document.getElementById(idBook)) {
+                    return;
                 }
-            }
 
-            // count++
-            // if(count<=6){
-            //     let r = 6-count
-            //     await this.request(r)
-            //     this.writeBook(this._result.items)
-            // }
-            // console.log(count);
+                // отображение рейтинга
+                let raitingStar = "";
+                if (raiting) {
+                    for (let index = 0; index < raiting; index++) {
+                        let star = `<img src="../image/icons/Star.svg" alt="" />`;
+                        raitingStar += star;
+                    }
+                }
 
-            // создание карточки книги
-            let bookNew = `
+                // создание карточки книги
+                let bookNew = `
             <div class="card-book" id='${idBook}' attr = "${flagButton === true ? "buy" : "not-buy"}">
-                <div class="card-book__img" style="background-image:url(${image ? image : this.placeholder});"></div>
+                <img  loading="lazy" class="card-book__img" src="${image ? image : this.placeholder}" alt="">
+                
                 <div class="card-book__box">
                     <p class="card-book__box-autor">${autor ? autor : ""}</p>
                     <h2 class="card-book__box-title">${title}</h2>
@@ -86,19 +80,20 @@ class WriteContent extends RequestApi {
                     <p class="card-book__box-description">${description === undefined ? "" : description + "..."}</p>
                     <p class="card-book__box-price">${priceN}</p>
                     <button class="card-book__box-button ${flagButton === true ? "in-the-cart" : ""}">${
-                flagButton === true ? "in the cart" : "buy now"
-            }</button>
+                    flagButton === true ? "in the cart" : "buy now"
+                }</button>
                 </div>
             </div>`;
-            this._bookBox.innerHTML += bookNew;
-        });
+                this._bookBox.innerHTML += bookNew;
+            });
         this.initButtonBuy();
     }
     //навешивание обработчика на кнопку купить в карточке книги
     initButtonBuy() {
         this._buttons = document.querySelectorAll(".card-book__box-button");
         this._buttons.forEach((element) => {
-            element.addEventListener("click", () => {
+            element.addEventListener("click", (e) => {
+                e.preventDefault()
                 this.bookBuy(element);
             });
         });
