@@ -19,7 +19,7 @@ class Slider {
     }
     initSlider() {
         this._arrImages.forEach((element, index) => {
-            this._slider = `<div class="advertising__slider-image n${index} ${index === 0 ? "active" : ""}" style = 'background-image:url(${
+            this._slider = `<div data-src="image.png" class="lozad advertising__slider-image n${index} ${index === 0 ? "active" : ""}" style = 'background-image:url(${
                 this._arrImages[index].url
             })' data-index="${index}"></div>`;
             this._sliderBox.innerHTML += this._slider;

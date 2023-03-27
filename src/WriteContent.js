@@ -1,6 +1,8 @@
 import RequestApi from "./RequestApi";
+import lozad from 'lozad'
 
-class WriteContent extends RequestApi {
+const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+class WriteContent extends RequestApi{
     constructor() {
         super();
     }
@@ -66,7 +68,7 @@ class WriteContent extends RequestApi {
                 // создание карточки книги
                 let bookNew = `
             <div class="card-book" id='${idBook}' attr = "${flagButton === true ? "buy" : "not-buy"}">
-                <img  loading="lazy" class="card-book__img" src="${image ? image : this.placeholder}" alt="">
+                <img  data-src="${image ? image : this.placeholder}" class="lozad card-book__img" src="${image ? image : this.placeholder}" alt="book-image">
                 
                 <div class="card-book__box">
                     <p class="card-book__box-autor">${autor ? autor : ""}</p>
@@ -86,6 +88,7 @@ class WriteContent extends RequestApi {
             </div>`;
                 this._bookBox.innerHTML += bookNew;
             });
+            observer.observe();
         this.initButtonBuy();
     }
     //навешивание обработчика на кнопку купить в карточке книги
