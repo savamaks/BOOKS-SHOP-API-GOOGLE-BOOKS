@@ -8,7 +8,7 @@ module.exports = {
         path: path.resolve(__dirname, "output"),
         filename: "main.js",
     },
-    mode: "development", // минификация для js файлов
+    mode: "production", // минификация для js файлов
     //production
     //development
     optimization: {

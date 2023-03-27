@@ -84,7 +84,7 @@ class RequestApi {
             const response = await fetch(
                 `https://www.googleapis.com/books/v1/volumes?q="subject:${this._arrCategories[this._category].url}"&key=${
                     this._keyAPI
-                }&printType=books&startIndex=${this._start}&maxResults=20&langRestrict=ru`
+                }&printType=books&startIndex=${this._start}&maxResults=6&langRestrict=ru`
             );
             const data = await response.json();
             return (this._result = data);
