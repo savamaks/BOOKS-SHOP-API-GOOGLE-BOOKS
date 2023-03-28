@@ -114,6 +114,7 @@ class RequestApi {
                 }
             });
         });
+        
     }
     linkClick(num) {
         this._navBox.querySelectorAll(".active").forEach((element) => {

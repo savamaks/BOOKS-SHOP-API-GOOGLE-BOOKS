@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "lozad": "^1.16.0",
-    "node": "^19.8.1"
+    "node": "^19.8.1",
+    "sal.js": "^0.8.5"
   },
   "devDependencies": {
     "css-loader": "^6.7.3",
@@ -17,6 +18,6 @@
   "scripts": {
     "build": "webpack",
     "build watch": "webpack --watch",
-    "serve":"webpack server --no-stats"
+    "serve": "webpack server --no-stats"
   }
 }

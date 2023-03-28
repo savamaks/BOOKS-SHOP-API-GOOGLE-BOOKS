@@ -1,5 +1,6 @@
 import RequestApi from "./RequestApi";
 import lozad from 'lozad'
+import sal from 'sal.js'
 
 const observer = lozad(); // lazy loads elements with default selector as '.lozad'
 class WriteContent extends RequestApi{
@@ -67,7 +68,7 @@ class WriteContent extends RequestApi{
 
                 // создание карточки книги
                 let bookNew = `
-            <div class="card-book" id='${idBook}' attr = "${flagButton === true ? "buy" : "not-buy"}">
+            <div data-sal="zoom-in" data-sal-delay="150" data-sal-easing="ease" data-sal-threshold="1"  class="card-book" id='${idBook}' attr = "${flagButton === true ? "buy" : "not-buy"}">
                 <img  data-src="${image ? image : this.placeholder}" class="lozad card-book__img" src="${image ? image : this.placeholder}" alt="book-image">
                 
                 <div class="card-book__box">
@@ -90,6 +91,7 @@ class WriteContent extends RequestApi{
             });
             observer.observe();
         this.initButtonBuy();
+        sal();
     }
     //навешивание обработчика на кнопку купить в карточке книги
     initButtonBuy() {

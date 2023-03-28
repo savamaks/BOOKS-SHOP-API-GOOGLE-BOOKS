@@ -1,6 +1,7 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+var sal = require('sal.js')
 
 module.exports = {
     entry: path.resolve(__dirname, "index.js"),
@@ -8,7 +9,7 @@ module.exports = {
         path: path.resolve(__dirname, "output"),
         filename: "main.js",
     },
-    mode: "production", // минификация для js файлов
+    mode: "development", // минификация для js файлов
     //production
     //development
     optimization: {

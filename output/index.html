@@ -8,14 +8,13 @@
         <title>Книжный магазин</title>
     </head>
     <body class="body">
-        <header class="header">
+        <header data-sal="flip-left" data-sal-delay="150" data-sal-easing="ease" class="header">
             <h1 class="header__title">Bookshop</h1>
             <nav class="header__nav">
                 <button class="header__nav-link active">books</button>
                 <button class="header__nav-link">audiobooks</button>
                 <button class="header__nav-link">Stationery & gifts</button>
                 <button class="header__nav-link">blog</button>
-                
             </nav>
             <div class="header__box">
                 <button class="header__box-link"><img src="..//image/icons/user.svg" alt="" /></button>
@@ -25,10 +24,10 @@
             </div>
         </header>
         <main class="main">
-            <section class="advertising">
+            <section class="advertising" data-sal="slide-right" data-sal-delay="150" data-sal-easing="ease" data-sal-repeat="once">
                 <div class="advertising__slider"></div>
 
-                <div class="advertising__old-book">
+                <div class="advertising__old-book" >
                     <p class="advertising__old-book--text">Change old book on new</p>
                     <button class="advertising__old-book--button"><img src="../image/icons/arrow.svg" alt="" /></button>
                 </div>
@@ -41,15 +40,9 @@
                 <div class="advertising__pointer-box"></div>
             </section>
             <section class="block">
-                <nav class="block__nav">
-                </nav>
+                <nav data-sal="zoom-in" data-sal-delay="150" data-sal-easing="ease"  class="block__nav"></nav>
 
-                <div class="block__box">
-
-                    
-
-                </div>
-
+                <div class="block__box"></div>
             </section>
             <button class="button-load">Load more</button>
         </main>
